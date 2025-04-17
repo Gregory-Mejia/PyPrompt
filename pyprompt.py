@@ -46,13 +46,14 @@ def prompt_console(text: str, _type: T) -> T:
             else:
                 # Do a recursive call-back for reprompting
                 print(f"Invalid input for type: {_type}\nTry again.")
-                prompt_console(text=text, _type=_type)
+                return prompt_console(text=text, _type=_type)
         else:
             # Otherwise, return the type given
             u_inp = _type(u_inp)
             return u_inp
     except ValueError as ve:
-        print(ve)
+        # Handle the ValueError gracefully
+        print(f"A ValueError occured with the user's input: {ve}")
 
     print(type(u_inp))
     print(u_inp)
