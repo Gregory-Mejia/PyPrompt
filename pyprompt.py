@@ -19,7 +19,3 @@ T = TypeVar("type")  # For the parameter type definition and return-type
 
 def prompt_console(text: str, _type: T) -> T:
     pass
-
-
-def a():
-    ...
