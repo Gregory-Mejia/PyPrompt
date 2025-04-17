@@ -54,6 +54,9 @@ def prompt_console(text: str, _type: T) -> T:
     except ValueError as ve:
         # Handle the ValueError gracefully
         print(f"A ValueError occured with the user's input: {ve}")
+    except Exception as e:
+        # Handle other exceptions
+        print(f"An unknown exception occured: {e}")
 
     print(type(u_inp))
     print(u_inp)
