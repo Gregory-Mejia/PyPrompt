@@ -17,39 +17,58 @@ T = TypeVar("type")  # For the parameter type definition and return-type
 # -- Functions -- #
 
 
-def prompt_console(text: str, _type: T) -> T:
+def prompt_console(text: str, _type: T, tries: int = -1) -> T:
     """
         This function attempts to resolve the user's input to the type provided
         Takes in 'text' as a string and '_type' as a type and returns said type
+        Also takes in optional parameter 'tries' as an int
 
         'text' is used to prompt the user
         '_type' is used to continuously check for the required input
+        'tries' is the total amount of tries the user gets for input
+            - If over 0, it will assume that there a limited amount of tries
+            - If 0, only one attempt will be made
+            - If less than 0, infinite attempts will be made
     """
 
     # Get the input from the user
-    u_inp = input(text)
+    u_inp: str = input(text)
 
     # Exception block to try and resolve the type
     try:
         # Check to handle the special case for boolean type resolving
         if (_type == bool):
             # Lower the string to not have to check for more cases
-            u_inp = u_inp.lower()
+            u_inp: str = u_inp.lower()
 
             # Use a long if statement to check if it's any variant of true
             if ((u_inp == "true") or (u_inp == "yes") or (u_inp == "y")):
                 return True
-            # Check for all variants of the false boolean
+            # Check for some variants of the false boolean variants
             elif ((u_inp == "false") or (u_inp == "no") or (u_inp == "n")):
                 return False
             # Default to a reprompt for invalid input
             else:
+                print(f"Invalid input for type: {_type}")
+                if (tries > 0):   # Check for the amount of attempts
+                    # Increment attempts down and print feedback
+                    tries -= 1
+                    print(f"You have {tries} attempts left.")
+                elif (tries < 0):  # Check for if there are infinite attempts
+                    # Output to signify that the user try again
+                    print("Please try again.")
+                else:  # Assume that 0 is when there are no more attempts left
+                    print("No more attempts will be made.")
+                    return None  # Return nothing if no input is given
+
                 # Do a recursive call-back for reprompting
-                print(f"Invalid input for type: {_type}\nTry again.")
-                return prompt_console(text=text, _type=_type)
+                # This will not be called because the stopping points
+                # already resolve this issue by returning early.
+                return prompt_console(text=text, _type=_type, tries=tries)
         else:
             # Otherwise, return the type given
-            u_inp = _type(u_inp)
+            # This will cause an exception if it cannot convert
+            u_inp: T = _type(u_inp)
             return u_inp
     except ValueError as ve:
         # Handle the ValueError gracefully
@@ -57,9 +76,3 @@ def prompt_console(text: str, _type: T) -> T:
     except Exception as e:
         # Handle other exceptions
         print(f"An unknown exception occured: {e}")
-
-    print(type(u_inp))
-    print(u_inp)
-
-
-prompt_console("Enter a boolean: ", bool)
