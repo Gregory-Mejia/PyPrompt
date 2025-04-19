@@ -60,3 +60,6 @@ def prompt_console(text: str, _type: T) -> T:
 
     print(type(u_inp))
     print(u_inp)
+
+
+prompt_console("Enter a boolean: ", bool)
