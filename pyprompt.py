@@ -2,7 +2,8 @@
 
     Date: 4/17/2025
     Purpose:
-    Create a library that allows for safe user console prompting.
+    Create a simple reusable function that allows for safe user console
+    prompting for Python.
 
 """
 
