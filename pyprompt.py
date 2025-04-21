@@ -39,6 +39,7 @@ def prompt_console(text: str, _type: T, tries: int = -1) -> T:
 
     # Check for exit conditions from the user's input
     if ((l_inp == "exit") or (l_inp == "terminate")):
+        print("Exitting user input prompt.")
         return None
 
     # Exception block to try and resolve the type
@@ -81,3 +82,17 @@ def prompt_console(text: str, _type: T, tries: int = -1) -> T:
     except Exception as e:
         # Handle other exceptions
         print(f"An unknown exception occured: {e}")
+
+
+def prompt_list(text: str, len: int, _type: T) -> list[T]:
+    print(text)
+    store_list = []
+    if (len > 0):
+        index: int
+        for index in range(0, len, 1):
+            store_list.append(
+                prompt_console()
+            )
+
+
+prompt_list("ioaf", 3, bool)
