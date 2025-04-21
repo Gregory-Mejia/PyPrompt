@@ -3,7 +3,9 @@ A simple Python library that makes getting input on the terminal from users easi
 - Features:
     - Ensure user input type.
     - Optional max attempts.
+    - Exit input commands:
+        - Exit
+        - Terminate
 ## Planned Features
-- Exit input commands.
 - Array population
 - Dictionary population

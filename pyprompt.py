@@ -34,19 +34,23 @@ def prompt_console(text: str, _type: T, tries: int = -1) -> T:
 
     # Get the input from the user
     u_inp: str = input(text)
+    # Lower the string for use in the following if statements
+    l_inp: str = u_inp.lower()
+
+    # Check for exit conditions from the user's input
+    if ((l_inp == "exit") or (l_inp == "terminate")):
+        return None
 
     # Exception block to try and resolve the type
     try:
         # Check to handle the special case for boolean type resolving
         if (_type == bool):
-            # Lower the string to not have to check for more cases
-            u_inp: str = u_inp.lower()
 
             # Use a long if statement to check if it's any variant of true
-            if ((u_inp == "true") or (u_inp == "yes") or (u_inp == "y")):
+            if ((l_inp == "true") or (l_inp == "yes") or (l_inp == "y")):
                 return True
             # Check for some variants of the false boolean variants
-            elif ((u_inp == "false") or (u_inp == "no") or (u_inp == "n")):
+            elif ((l_inp == "false") or (l_inp == "no") or (l_inp == "n")):
                 return False
             # Default to a reprompt for invalid input
             else:
